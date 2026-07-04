@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String   @id @default(cuid())
+  discordId       String   @unique
+  discordUsername String?
+  rpName          String?  @unique
+  role            Role     @default(PENDING)
+  bio             String?
+  mentorId        String?
+  mentor          User?    @relation("Mentorship", fields: [mentorId], references: [id])
+  mentees         User[]   @relation("Mentorship")
+  bannedAt        DateTime?
+  banReason       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  codexEntries         CodexEntry[]
+  combatReports        CombatReport[]
+  courses              Course[]
+  simulations          Simulation[]
+  libraryGuides        LibraryGuide[]
+  challenges           Challenge[]
+  debates              Debate[]
+  debateResponses      DebateResponse[]
+  distinctionsReceived Distinction[]
+  journalEntries       JournalEntry[]
+  slayerProfiles       SlayerProfile[]
+  posts                Post[]
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+  OBSERVER
+  PENDING
+  BANNED
+}
+
+model SlayerProfile {
+  id          String   @id @default(cuid())
+  name        String
+  grade       String?
+  breathStyle String?
+  strengths   String?
+  weaknesses  String?
+  personality String?
+  knownFights String?
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CombatReport {
+  id           String   @id @default(cuid())
+  title        String
+  whatWorked   String
+  whatFailed   String
+  whyAnalysis  String
+  improvements String
+  authorId     String
+  author       User     @relation(fields: [authorId], references: [id])
+  createdAt    DateTime @default(now())
+}
+
+model CodexEntry {
+  id           String   @id @default(cuid())
+  entryNumber  Int      @default(autoincrement())
+  subject      String
+  observations String
+  advice       String
+  authorId     String
+  author       User     @relation(fields: [authorId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Course {
+  id          String         @id @default(cuid())
+  title       String
+  category    CourseCategory
+  description String
+  content     String
+  scheduledAt DateTime?
+  location    String?
+  authorId    String
+  author      User           @relation(fields: [authorId], references: [id])
+  createdAt   DateTime       @default(now())
+}
+
+enum CourseCategory {
+  THEORIQUE
+  PRATIQUE
+  DEVELOPPEMENT
+}
+
+model Simulation {
+  id         String   @id @default(cuid())
+  title      String
+  scenario   String
+  options    String
+  authorId   String
+  author     User     @relation(fields: [authorId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model LibraryGuide {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Challenge {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  difficulty  String?
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model Debate {
+  id          String           @id @default(cuid())
+  subject     String
+  description String?
+  scheduledAt DateTime?
+  authorId    String
+  author      User             @relation(fields: [authorId], references: [id])
+  responses   DebateResponse[]
+  createdAt   DateTime         @default(now())
+}
+
+model DebateResponse {
+  id       String   @id @default(cuid())
+  content  String
+  debateId String
+  debate   Debate   @relation(fields: [debateId], references: [id], onDelete: Cascade)
+  authorId String
+  author   User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Distinction {
+  id       String   @id @default(cuid())
+  title    String
+  category String
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model JournalEntry {
+  id       String   @id @default(cuid())
+  number   Int      @default(autoincrement())
+  title    String
+  content  String
+  authorId String
+  author   User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+}
+
+model Post {
+  id       String   @id @default(cuid())
+  title    String
+  content  String
+  category String
+  authorId String
+  author   User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
