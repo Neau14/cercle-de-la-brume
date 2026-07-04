@@ -105,13 +105,25 @@ enum CourseCategory {
 }
 
 model Simulation {
-  id         String   @id @default(cuid())
+  id         String           @id @default(cuid())
   title      String
   scenario   String
   options    String
   authorId   String
-  author     User     @relation(fields: [authorId], references: [id])
-  createdAt  DateTime @default(now())
+  author     User             @relation(fields: [authorId], references: [id])
+  votes      SimulationVote[]
+  createdAt  DateTime         @default(now())
+}
+
+model SimulationVote {
+  id           String     @id @default(cuid())
+  simulationId String
+  simulation   Simulation @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+  userId       String
+  choice       String
+  createdAt    DateTime   @default(now())
+
+  @@unique([simulationId, userId])
 }
 
 model LibraryGuide {

@@ -122,28 +122,7 @@ export default function DebatsPage() {
     }
   };
 
-  const defaultDebates = [
-    {
-      id: 'd1',
-      subject: 'Faut-il systématiquement ignorer les humains faibles ?',
-      description: 'Débat hebdomadaire. Certains démons pensent que la chasse aux humains faibles n\'apporte aucun gain de puissance et fait perdre du temps. D\'autres affirment qu\'ils sont des proies faciles.',
-      author: { rpName: 'Ryuga Amagiri' },
-      createdAt: new Date(),
-      responses: [
-        { id: 'r1', content: 'Ils sont utiles pour récupérer de l\'énergie rapidement après une blessure, mais ils ne doivent pas être notre priorité de chasse.', author: { rpName: 'Katsuro' }, createdAt: new Date() }
-      ],
-      _count: { responses: 1 }
-    },
-    {
-      id: 'd2',
-      subject: 'Faut-il toujours éliminer un Pourfendeur lorsqu\'on en a l\'occasion ?',
-      description: 'Est-il stratégiquement viable de laisser repartir un pourfendeur blessé pour qu\'il serve d\'appât ou qu\'il transmette une fausse information ?',
-      author: { rpName: 'Ryuga Amagiri' },
-      createdAt: new Date(),
-      responses: [],
-      _count: { responses: 0 }
-    }
-  ];
+  const defaultDebates = [];
 
   const displayDebates = debates.length > 0 ? debates : defaultDebates;
   const canPost = ['ADMIN', 'MEMBER'].includes(userRole);

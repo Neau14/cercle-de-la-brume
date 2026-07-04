@@ -83,24 +83,7 @@ export default function EntraidePage() {
     RETOUR: '📝 Retours sur Fiche',
   };
 
-  const displayPosts = posts.length > 0 ? posts : [
-    {
-      id: 's1',
-      title: 'Recherche partenaire pour entraînement nocturne',
-      category: 'PARTENAIRE',
-      content: 'Cherche un démon de rang intermédiaire pour tester des esquives de projectiles dans la forêt de l\'Est.',
-      author: { rpName: 'Ryuga Amagiri' },
-      createdAt: new Date()
-    },
-    {
-      id: 's2',
-      title: 'Besoin d\'avis sur mon Pouvoir Sanguinaire brumeux',
-      category: 'TECHNIQUE',
-      content: 'J\'aimerais créer un pouvoir basé sur des illusions d\'optique dans la brume. Est-ce trop fort ou équilibré pour le RP ?',
-      author: { rpName: 'Katsuro' },
-      createdAt: new Date()
-    }
-  ];
+  const displayPosts = posts;
 
   const canPost = ['ADMIN', 'MEMBER'].includes(userRole);
 
@@ -111,7 +94,7 @@ export default function EntraidePage() {
   return (
     <div className="animate-in">
       <div className="page-header">
-        <h1 className="page-title">🤝 Salon d'Entraide RP</h1>
+        <h1 className="page-title">🤝 Salon d'Entraide</h1>
         <p className="page-subtitle">Demande des partenaires de jeu, des conseils tactiques, ou des retours sur tes créations RP.</p>
       </div>
 

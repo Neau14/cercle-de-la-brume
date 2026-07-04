@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/Sidebar';
-import Header from '@/components/Header';
 import LoadingScreen from '@/components/LoadingScreen';
 
 export default function DashboardLayout({ children }) {
@@ -53,7 +52,13 @@ export default function DashboardLayout({ children }) {
       <Sidebar user={user} isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       
       <div className="dashboard-content">
-        <Header user={user} onMenuToggle={() => setSidebarOpen(!sidebarOpen)} activeSection="Dashboard" />
+        <button 
+          className="menu-toggle" 
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          style={{ position: 'fixed', top: '15px', left: '15px', zIndex: 100 }}
+        >
+          ☰
+        </button>
         <main className="dashboard-main animate-in">
           {children}
         </main>

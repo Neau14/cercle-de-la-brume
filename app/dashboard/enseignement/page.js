@@ -95,19 +95,9 @@ export default function EnseignementPage() {
 
   // Fallback default suggestions for each category
   const suggestions = {
-    THEORIQUE: [
-      { id: 't1', title: 'Anatomie Humaine & Points Vitaux', description: 'Étude des organes vitaux pour optimiser l\'alimentation et accélérer la régénération.', content: 'Focus sur le cœur, le cerveau, et les artères principales.' },
-      { id: 't2', title: 'Fonctionnement des Souffles', description: 'Comprendre comment les Pourfendeurs oxygènent leur sang et comment interrompre leur rythme respiratoire.', content: 'Analyse de la concentration intégrale.' },
-      { id: 't3', title: 'Histoire et Grades des Pourfendeurs', description: 'De Mizunoto à Hashira (Pilier). Comment identifier rapidement la force de votre cible.', content: 'Grades et repérage de l\'aura.' }
-    ],
-    PRATIQUE: [
-      { id: 'p1', title: 'Sparring entre démons & Combat contrôlé', description: 'Session d\'entraînement pour tester ses pouvoirs sanguinaires sans s\'entretuer.', content: 'Régénération autorisée, coups critiques interdits.' },
-      { id: 'p2', title: 'Vitesse & Réaction d\'esquive', description: 'Exercices d\'esquive contre des projectiles rapides simulant des flèches ou des sabres.', content: 'Vitesse de déplacement et prédiction.' }
-    ],
-    DEVELOPPEMENT: [
-      { id: 'd1', title: 'Gérer son ego et accepter la retraite tactique', description: 'Pourquoi fuir face à un Pilier n\'est pas une lâcheté mais un investissement pour le futur.', content: 'Maîtrise de soi et sang-froid.' },
-      { id: 'd2', title: 'Trouver et raffiner son style de combat', description: 'Adapter son Pouvoir Sanguinaire à sa morphologie et à ses faiblesses originelles.', content: 'Développement personnel.' }
-    ]
+    THEORIQUE: [],
+    PRATIQUE: [],
+    DEVELOPPEMENT: []
   };
 
   const displayCourses = filteredCourses.length > 0 ? filteredCourses : suggestions[activeTab];

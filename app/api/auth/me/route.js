@@ -15,6 +15,8 @@ export async function GET() {
         id: true,
         rpName: true,
         role: true,
+        isMentor: true,
+        avatarUrl: true,
         bio: true,
         mentorId: true,
         createdAt: true,

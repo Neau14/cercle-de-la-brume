@@ -13,6 +13,7 @@ export default function JournalPage() {
   const [content, setContent] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [editingId, setEditingId] = useState(null);
 
   useEffect(() => {
     async function loadData() {
@@ -50,23 +51,31 @@ export default function JournalPage() {
     setSaving(true);
     setError('');
 
-    try {
-      const res = await fetch('/api/journal', {
-        method: 'POST',
+      const isEditing = Boolean(editingId);
+      const url = isEditing ? `/api/journal/${editingId}` : '/api/journal';
+      const method = isEditing ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, content }),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error || 'Erreur lors de la création.');
+        setError(data.error || 'Erreur lors de la sauvegarde.');
         return;
       }
 
       const data = await res.json();
-      setEntries([data.entry, ...entries]);
+      if (isEditing) {
+        setEntries(entries.map(e => e.id === editingId ? data.entry : e));
+      } else {
+        setEntries([data.entry, ...entries]);
+      }
       setTitle('');
       setContent('');
+      setEditingId(null);
       setShowModal(false);
     } catch (err) {
       setError('Erreur réseau.');
@@ -75,27 +84,33 @@ export default function JournalPage() {
     }
   };
 
-  const defaultEntries = [
-    {
-      id: 'j1',
-      number: 4,
-      title: 'Expansion du Cercle et Nouveaux Rapports',
-      content: 'Trois nouveaux membres démons ont rejoint le cercle. Deux analyses de combat sur le souffle de la foudre ont été publiées dans la base de recherche. Une nouvelle stratégie de diversion a été testée avec succès.',
-      author: { rpName: 'Ryuga Amagiri' },
-      createdAt: new Date()
-    },
-    {
-      id: 'j2',
-      number: 3,
-      title: 'Premières Fiches du Codex compilées',
-      content: 'Le codex est officiellement ouvert. Veuillez y inscrire toutes vos constatations immédiates. Les chasseurs se font de plus en plus agressifs dans le secteur Ouest.',
-      author: { rpName: 'Ryuga Amagiri' },
-      createdAt: new Date(Date.now() - 86400000 * 3)
-    }
-  ];
+  const handleEdit = (entry) => {
+    setTitle(entry.title);
+    setContent(entry.content);
+    setEditingId(entry.id);
+    setShowModal(true);
+    setError('');
+  };
 
-  const displayEntries = entries.length > 0 ? entries : defaultEntries;
+  const handleDelete = async (id) => {
+    if (!confirm('Es-tu sûr de vouloir supprimer ce bulletin ?')) return;
+    try {
+      const res = await fetch(`/api/journal/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        setEntries(entries.filter(e => e.id !== id));
+      } else {
+        alert('Erreur lors de la suppression');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const defaultEntries = [];
+
+  const displayEntries = entries;
   const canPost = ['ADMIN', 'MEMBER'].includes(userRole);
+  const isAdmin = userRole === 'ADMIN';
 
   if (loading) {
     return <div style={{ color: 'var(--text-secondary)' }}>Chargement du journal...</div>;
@@ -111,7 +126,12 @@ export default function JournalPage() {
       <div className="section-header">
         <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Les publications et bilans périodiques de l'alliance.</span>
         {canPost && (
-          <button onClick={() => setShowModal(true)} className="btn btn-primary">
+          <button onClick={() => {
+            setTitle('');
+            setContent('');
+            setEditingId(null);
+            setShowModal(true);
+          }} className="btn btn-primary">
             + Publier un Bulletin
           </button>
         )}
@@ -133,8 +153,14 @@ export default function JournalPage() {
               {entry.content}
             </p>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-start', marginTop: '16px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '16px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
               <span>Écrit par : <strong>{entry.author?.rpName || 'Admin'}</strong></span>
+              {isAdmin && (
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <button onClick={() => handleEdit(entry)} className="btn btn-secondary btn-sm" style={{ padding: '4px 8px', fontSize: '0.7rem' }}>Éditer</button>
+                  <button onClick={() => handleDelete(entry.id)} className="btn btn-secondary btn-sm" style={{ padding: '4px 8px', fontSize: '0.7rem', color: '#f87171', borderColor: '#f87171' }}>Supprimer</button>
+                </div>
+              )}
             </div>
           </div>
         ))}

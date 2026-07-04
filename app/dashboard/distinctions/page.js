@@ -83,22 +83,7 @@ export default function DistinctionsPage() {
     }
   };
 
-  const defaultDistinctions = [
-    {
-      id: 'd1',
-      title: 'Meilleur Rapport d’Analyse',
-      category: 'ANALYSE',
-      user: { rpName: 'Ryuga Amagiri' },
-      createdAt: new Date()
-    },
-    {
-      id: 'd2',
-      title: 'Plus belle Progression',
-      category: 'PROGRESSION',
-      user: { rpName: 'Akaza (RP)' },
-      createdAt: new Date()
-    }
-  ];
+  const defaultDistinctions = [];
 
   const categoryLabels = {
     ANALYSE: '🔍 Meilleur rapport d\'analyse',

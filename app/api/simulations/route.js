@@ -7,7 +7,10 @@ export async function GET() {
     const auth = await requireAuth();
     if (auth.error) return jsonError(auth.error, auth.status);
     const simulations = await prisma.simulation.findMany({
-      include: { author: { select: { rpName: true } } },
+      include: { 
+        author: { select: { rpName: true } },
+        votes: { select: { userId: true, choice: true } },
+      },
       orderBy: { createdAt: 'desc' },
     });
     return NextResponse.json({ simulations });
