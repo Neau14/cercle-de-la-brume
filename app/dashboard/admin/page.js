@@ -177,17 +177,26 @@ export default function AdminPage() {
                     )}
 
                     {u.role !== 'PENDING' && u.role !== 'BANNED' && (
-                      <select
-                        value={u.role}
-                        onChange={(e) => handleAction(u.id, 'changeRole', e.target.value)}
-                        className="form-select"
-                        style={{ padding: '6px 12px', fontSize: '0.8rem', width: 'auto', marginBottom: 0 }}
-                      >
-                        <option value="MEMBER">Membre</option>
-                        <option value="OBSERVER">Observateur</option>
-                        <option value="ADMIN">Admin</option>
-                        <option value="PENDING">Attente</option>
-                      </select>
+                      <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                        <select
+                          value={u.role}
+                          onChange={(e) => handleAction(u.id, 'changeRole', e.target.value)}
+                          className="form-select"
+                          style={{ padding: '6px 12px', fontSize: '0.8rem', width: 'auto', marginBottom: 0 }}
+                        >
+                          <option value="MEMBER">Membre</option>
+                          <option value="OBSERVER">Observateur</option>
+                          <option value="ADMIN">Admin</option>
+                          <option value="PENDING">Attente</option>
+                        </select>
+                        <button 
+                          onClick={() => handleAction(u.id, 'toggleMentor', !u.isMentor)} 
+                          className={`btn btn-sm ${u.isMentor ? 'btn-primary' : 'btn-secondary'}`}
+                          style={{ padding: '6px 10px', fontSize: '0.75rem', background: u.isMentor ? '#fbbf24' : undefined, color: u.isMentor ? '#000' : undefined }}
+                        >
+                          {u.isMentor ? '⭐ Mentor' : '☆ Mentor'}
+                        </button>
+                      </div>
                     )}
 
                     {/* Change RP Name */}

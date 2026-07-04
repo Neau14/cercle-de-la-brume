@@ -35,7 +35,7 @@ export default function MentoratPage() {
     loadData();
   }, []);
 
-  const mentorsList = users.filter((u) => ['ADMIN', 'MEMBER'].includes(u.role));
+  const mentorsList = users.filter((u) => u.isMentor);
   const menteesList = users.filter((u) => u.role === 'PENDING' || u.role === 'OBSERVER' || (u.role === 'MEMBER' && !u.mentor));
 
   const hasMentor = currentUser?.mentor;

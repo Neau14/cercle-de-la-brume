@@ -53,6 +53,12 @@ export async function GET(request) {
     const discordUser = await userResponse.json();
     const discordId = discordUser.id;
     const discordUsername = discordUser.username;
+    
+    // Construct avatar URL
+    let avatarUrl = null;
+    if (discordUser.avatar) {
+      avatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${discordUser.avatar}.png`;
+    }
 
     // Find or create the user in database
     let user = await prisma.user.findUnique({
@@ -70,14 +76,16 @@ export async function GET(request) {
           discordId,
           discordUsername,
           role: roleToAssign,
+          avatarUrl,
         },
       });
     } else {
-      // Sync latest Discord username. If owner logged in, ensure they are ADMIN.
+      // Sync latest Discord username and avatar. If owner logged in, ensure they are ADMIN.
       user = await prisma.user.update({
         where: { discordId },
         data: { 
           discordUsername,
+          avatarUrl,
           ...(isOwner ? { role: 'ADMIN' } : {})
         },
       });
@@ -93,6 +101,7 @@ export async function GET(request) {
       discordId: user.discordId,
       role: user.role,
       rpName: user.rpName || null,
+      avatarUrl: user.avatarUrl || null,
     });
 
     await setAuthCookie(token);

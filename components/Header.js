@@ -16,9 +16,9 @@ export default function Header({ user, onMenuToggle, activeSection }) {
         <button className="menu-toggle" onClick={onMenuToggle}>
           ☰
         </button>
-        <span className="header-breadcrumb">
-          Cercle de la Brume / <span style={{ color: 'var(--text-primary)', fontWeight: 650 }}>{activeSection}</span>
-        </span>
+        <div className="header-path">
+          Le Cercle de la Brume
+        </div>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>

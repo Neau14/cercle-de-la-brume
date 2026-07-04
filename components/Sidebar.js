@@ -59,12 +59,18 @@ export default function Sidebar({ user, isOpen, onClose }) {
 
         <div className="sidebar-footer">
           <div className="sidebar-user">
-            <div className="sidebar-avatar">
-              {user?.rpName ? user.rpName.substring(0, 2).toUpperCase() : 'DM'}
+            <div className="sidebar-avatar" style={{ padding: user?.avatarUrl ? 0 : undefined, overflow: 'hidden' }}>
+              {user?.avatarUrl ? (
+                <img src={user.avatarUrl} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                user?.rpName ? user.rpName.substring(0, 2).toUpperCase() : 'DM'
+              )}
             </div>
             <div className="sidebar-user-info">
               <div className="sidebar-user-name">{user?.rpName || 'Démon anonyme'}</div>
-              <div className="sidebar-user-role">{user?.role}</div>
+              <div className="sidebar-user-role">
+                {user?.role} {user?.isMentor && <span style={{ color: '#fbbf24', marginLeft: '4px', fontSize: '0.8rem' }}>(Mentor)</span>}
+              </div>
             </div>
           </div>
         </div>

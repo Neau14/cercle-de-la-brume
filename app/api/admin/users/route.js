@@ -23,6 +23,7 @@ export async function GET() {
         rpName: true,
         discordUsername: true,
         role: true,
+        isMentor: true,
         bio: true,
         mentorId: true,
         bannedAt: true,
@@ -109,6 +110,13 @@ export async function PATCH(request) {
 
       case 'updateBio':
         updateData = { bio: value || null };
+        break;
+
+      case 'toggleMentor':
+        if (typeof value !== 'boolean') {
+          return NextResponse.json({ error: 'Valeur booléenne requise pour isMentor.' }, { status: 400 });
+        }
+        updateData = { isMentor: value };
         break;
 
       default:
