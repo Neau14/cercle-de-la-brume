@@ -18,8 +18,8 @@ function LoginContent() {
       <div className="auth-container animate-in">
         <div className="glass-card-static auth-card">
           <div className="auth-header">
-            <div className="sidebar-logo" style={{ margin: '0 auto 16px', width: '60px', height: '60px', fontSize: '1.6rem' }}>
-              霧
+            <div style={{ margin: '0 auto 16px', display: 'flex', justifyContent: 'center' }}>
+              <img src="/logo.png" alt="Logo Cercle de la Brume" style={{ width: '80px', height: '80px', borderRadius: '50%', boxShadow: '0 0 20px rgba(88, 28, 135, 0.5)' }} />
             </div>
             <h1 className="auth-title">Le Cercle de la Brume</h1>
             <p className="auth-subtitle">Système d'unification et d'organisation des démons</p>
