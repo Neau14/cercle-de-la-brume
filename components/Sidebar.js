@@ -47,7 +47,7 @@ export default function Sidebar({ user, isOpen, onClose }) {
         </div>
 
         <nav className="sidebar-nav">
-          <div className="sidebar-section-label">RP Faction</div>
+          <div className="sidebar-section-label">Le cercle</div>
           {links.map((link) => {
             const hasAccess = link.roles.includes(user?.role);
             
