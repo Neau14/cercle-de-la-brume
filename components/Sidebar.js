@@ -18,8 +18,8 @@ export default function Sidebar({ user, isOpen, onClose }) {
   const links = [
     { label: 'Tableau de bord', href: '/dashboard', icon: '🏠', roles: ['ADMIN', 'MEMBER', 'OBSERVER'] },
     { label: 'Codex de la Brume', href: '/dashboard/codex', icon: '💡', roles: ['ADMIN', 'MEMBER', 'OBSERVER'] },
-    { label: 'Enseignement', href: '/dashboard/enseignement', icon: '📖', roles: ['ADMIN', 'MEMBER'] },
     { label: 'Recherche', href: '/dashboard/recherche', icon: '🔍', roles: ['ADMIN', 'MEMBER', 'OBSERVER'] },
+    { label: 'Enseignement', href: '/dashboard/enseignement', icon: '📖', roles: ['ADMIN', 'MEMBER'] },
     { label: 'Mentorat', href: '/dashboard/mentorat', icon: '🎓', roles: ['ADMIN', 'MEMBER'] },
     { label: 'Entraide', href: '/dashboard/entraide', icon: '🤝', roles: ['ADMIN', 'MEMBER'] },
     { label: 'Simulations', href: '/dashboard/simulations', icon: '⚔️', roles: ['ADMIN', 'MEMBER'] },
@@ -98,7 +98,7 @@ export default function Sidebar({ user, isOpen, onClose }) {
               <div className="sidebar-user-info">
                 <div className="sidebar-user-name">{user?.rpName || 'Démon anonyme'}</div>
                 <div className="sidebar-user-role">
-                  {user?.role} {user?.isMentor && <span style={{ color: '#fbbf24', marginLeft: '4px', fontSize: '0.8rem' }}>(Mentor)</span>}
+                  {{ ADMIN: 'Administrateur', MEMBER: 'Membre', OBSERVER: 'Observateur', PENDING: 'En attente', BANNED: 'Banni' }[user?.role] || user?.role} {user?.isMentor && <span style={{ color: '#fbbf24', marginLeft: '4px', fontSize: '0.8rem' }}>(Mentor)</span>}
                 </div>
               </div>
             </div>
