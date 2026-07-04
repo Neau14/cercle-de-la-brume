@@ -40,10 +40,10 @@ export default function LoadingScreen() {
     // Set loaded flag in session storage
     sessionStorage.setItem('cercle-brume-loaded', 'true');
 
-    // Hide after animation finishes (approx 4.5s)
+    // Hide after animation finishes (approx 6s)
     const timeout = setTimeout(() => {
       setVisible(false);
-    }, 4500);
+    }, 6000);
 
     return () => clearTimeout(timeout);
   }, []);
@@ -70,9 +70,9 @@ export default function LoadingScreen() {
           />
         ))}
 
-        {/* Compact circle that forms at the end */}
-        <div className="loading-circle">
-          <div className="loading-circle-inner"></div>
+        {/* Compact circle that forms at the end with the logo */}
+        <div className="loading-circle logo-reveal">
+          <img src="/logo.png" alt="Cercle de la Brume" className="loading-logo" />
         </div>
       </div>
 
