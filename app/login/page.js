@@ -57,9 +57,7 @@ function LoginContent() {
             </button>
           </div>
 
-          <div className="auth-footer" style={{ marginTop: '30px', opacity: 0.6 }}>
-            Accès sécurisé réservé aux membres de la faction.
-          </div>
+
         </div>
       </div>
     </div>

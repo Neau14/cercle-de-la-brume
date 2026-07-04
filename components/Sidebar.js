@@ -29,7 +29,9 @@ export default function Sidebar({ user, isOpen, onClose }) {
       <div className={`sidebar-overlay ${isOpen ? 'visible' : ''}`} onClick={onClose} />
       <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
-          <div className="sidebar-logo">霧</div>
+          <div>
+            <img src="/logo.png" alt="Logo" style={{ width: '45px', height: '45px', borderRadius: '50%', marginRight: '15px', boxShadow: '0 0 10px rgba(88, 28, 135, 0.5)' }} />
+          </div>
           <div>
             <h1 className="sidebar-title" style={{ fontFamily: "'Cinzel', serif" }}>
               Le Cercle<br />de la Brume
