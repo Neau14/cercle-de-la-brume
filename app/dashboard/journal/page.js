@@ -51,6 +51,7 @@ export default function JournalPage() {
     setSaving(true);
     setError('');
 
+    try {
       const isEditing = Boolean(editingId);
       const url = isEditing ? `/api/journal/${editingId}` : '/api/journal';
       const method = isEditing ? 'PUT' : 'POST';
